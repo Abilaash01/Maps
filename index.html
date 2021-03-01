@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      .button {
+        position: relative;
+        top: 20px;
+        left: 700px;
+        border: none;
+        padding: 15px 30px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 5px 2px;
+        cursor: pointer;
+    }
+    </style>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+   
+  </head>
+  <body>
+    <h1>Hello!</h1>
+
+    <div id="map" style="width:100%;height:400px;"></div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
+    
+    <button class="location" id="b1" type="button" value="submit" onclick="getLocation()">Get your location</button>
+    <button class="zoomout" id="b2" type="button" value="submit" onclick="zoomOut()">Zoom Out</button>
+    <button class="zoomin" id="b3" type="button" value="submit" onclick="zoomIn()">Zoom In</button>
+
+<p id="demo"></p>
+<div id="info_div"></div>
+
+<script>
+var x = document.getElementById("demo");
+var zoomLevel = 15;
+var map;
+
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } else { 
+    x.innerHTML = "Geolocation is not supported by this browser.";
+  }
+}
+
+// this function displays the user's location by it longitute and latitude coordinates.
+function showPosition(position) {
+  var currentx = position.coords.latitude;
+  var currenty = position.coords.longitude;
+  x.innerHTML = "Latitude: " + currentx + "<br>Longitude: " + currenty;
+  reCenter(currentx, currenty);
+}
+
+function zoomOut() {
+  zoomLevel -= 1;
+  map.setZoom(zoomLevel);
+}
+
+function zoomIn() {
+  zoomLevel += 1;
+  map.setZoom(zoomLevel);
+}
+
+// this method zooms into the location that the user is currently at.
+function reCenter(lati, long) {
+  var center = new google.maps.LatLng(lati, long);
+  map.panTo(center);
+  map.setZoom(zoomLevel);
+  var marker = new google.maps.Marker({
+    position: center,
+    title:"You are here!"
+  });
+  marker.setMap(null);
+  marker.setMap(map);
+}
+
+// this function takes the user's location and zooms in.
+function myMap() {
+  var mapProp= {
+    center:new google.maps.LatLng(lati,long), zoom:5
+  };
+
+  new google.maps.Marker({
+    position: new google.maps.LatLng(lati,long),
+    map,
+    title: "You are here!",
+  });
+
+  map = new google.maps.Map(document.getElementById("map"),mapProp);
+}
+
+</script>
+      
+      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB5Ibcb2PTtNPOZmNrVec89jNHlyUCTiIc&callback=myMap"></script>
+      
+  </body>
+</html>
