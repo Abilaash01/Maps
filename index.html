@@ -16,6 +16,8 @@
         cursor: pointer;
     }
     </style>
+
+
     <link href="css/bootstrap.min.css" rel="stylesheet">
    
   </head>
@@ -81,11 +83,11 @@ function reCenter(lati, long) {
 // this function takes the user's location and zooms in.
 function myMap() {
   var mapProp= {
-    center:new google.maps.LatLng(lati,long), zoom:5
+    center:new google.maps.LatLng(51.508742,-0.120850), zoom:5
   };
 
   new google.maps.Marker({
-    position: new google.maps.LatLng(lati,long),
+    position: new google.maps.LatLng(51.508742,-0.120850),
     map,
     title: "You are here!",
   });
